@@ -8,27 +8,27 @@ Example:
 ````json
 {
     "backendName": "default_myservice",
-    "lbPort": "8080",
+    "lbPort": 8080,
     "lbProtocol": "tcp",
     "upstreamServers":[
         {
             "host": "192.168.64.5", 
-            "port": "30291",
+            "port": 30291,
         },
         {
             "host": "192.168.64.6", 
-            "port": "30291",
+            "port": 30291,
         }
     ],
-    "proxyTimeout": "5s",
-    "proxyConnectTimeout": "2s",    
+    "proxyTimeoutSeconds": 5,
+    "proxyConnectTimeoutSeconds": 2,    
 }
 ````
 
 2/ The updated config file is written to disk
 Example:
 ````
-# default_myservice.conf
+# /etc/nginx/conf.f/default_myservice.conf
 stream {
     upstream default_myservice {
         server 192.168.64.5:30291;
@@ -43,6 +43,7 @@ stream {
     }
 }
 ````
+You can see in example-nginx.conf an example of a root nginx config that works with this setup
 
 
 3/ We issue an nginx hot reload command through 

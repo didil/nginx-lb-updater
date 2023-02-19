@@ -1,4 +1,4 @@
-MYGOBIN = "$(PWD)/bin"
+MYGOBIN = $(PWD)/bin
 
 install-tools:
 	@echo MYGOBIN: $(MYGOBIN)
@@ -17,4 +17,8 @@ build:
 	go build -o bin/api cmd/api/main.go
 
 run-dev: 
-	go run cmd/api/main.go
+	APP_ENV=development go run cmd/api/main.go
+
+.PHONY: gen-mocks
+gen-mocks:
+	mock/gen_mocks.sh
