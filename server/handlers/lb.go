@@ -18,6 +18,10 @@ type UpdateRequest struct {
 	ProxyConnectTimeoutSeconds int               `json:"proxyConnectTimeoutSeconds"`
 }
 
+type DeleteRequest struct {
+	BackendName string `json:"backendName"`
+}
+
 func (app *App) UpdateLB(w http.ResponseWriter, r *http.Request) {
 	req := &UpdateRequest{}
 
@@ -36,15 +40,33 @@ func (app *App) UpdateLB(w http.ResponseWriter, r *http.Request) {
 	app.WriteJSONResponse(w, http.StatusOK, JSONOK{})
 }
 
+func (app *App) DeleteLB(w http.ResponseWriter, r *http.Request) {
+	req := &DeleteRequest{}
+
+	err := json.NewDecoder(r.Body).Decode(req)
+	if err != nil {
+		app.WriteJSONErr(w, http.StatusBadRequest, errors.Wrapf(err, "failed to decode request"))
+		return
+	}
+
+	err = app.lbUpdater.DeleteStream(req.BackendName)
+	if err != nil {
+		app.WriteJSONErr(w, http.StatusInternalServerError, errors.Wrapf(err, "failed to delete stream"))
+		return
+	}
+
+	app.WriteJSONResponse(w, http.StatusOK, JSONOK{})
+}
+
 type JSONErr struct {
-	Err error `json:"err"`
+	Err string `json:"err"`
 }
 
 type JSONOK struct {
 }
 
 func (app *App) WriteJSONErr(w http.ResponseWriter, statusCode int, err error) {
-	app.WriteJSONResponse(w, statusCode, &JSONErr{Err: err})
+	app.WriteJSONResponse(w, statusCode, &JSONErr{Err: err.Error()})
 }
 
 func (app *App) WriteJSONResponse(w http.ResponseWriter, statusCode int, resp any) {

@@ -16,7 +16,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func TestInfoHandler(t *testing.T) {
+func TestUpdateLB(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -56,6 +56,46 @@ func TestInfoHandler(t *testing.T) {
 		Return(nil)
 
 	req, err := http.NewRequest(http.MethodPost, s.URL+"/api/v1/lb", &buf)
+	assert.NoError(t, err)
+
+	cl := &http.Client{}
+	resp, err := cl.Do(req)
+	assert.NoError(t, err)
+	defer resp.Body.Close()
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+	jsonOK := &handlers.JSONOK{}
+	err = json.NewDecoder(resp.Body).Decode(jsonOK)
+	assert.NoError(t, err)
+}
+
+func TestDeleteLB(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	lbUpdater := mock.NewMockLBUpdater(ctrl)
+	logger, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+
+	app := handlers.NewApp(lbUpdater, logger)
+	r := server.NewRouter(app)
+	s := httptest.NewServer(r)
+	defer s.Close()
+
+	requestBody := &handlers.DeleteRequest{
+		BackendName: "namespace-a_myservice",
+	}
+
+	var buf bytes.Buffer
+	err = json.NewEncoder(&buf).Encode(requestBody)
+	assert.NoError(t, err)
+
+	lbUpdater.EXPECT().
+		DeleteStream(requestBody.BackendName).
+		Return(nil)
+
+	req, err := http.NewRequest(http.MethodDelete, s.URL+"/api/v1/lb", &buf)
 	assert.NoError(t, err)
 
 	cl := &http.Client{}

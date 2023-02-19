@@ -12,6 +12,7 @@ func NewRouter(app *handlers.App) *chi.Mux {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Post("/api/v1/lb", app.UpdateLB)
+	r.Delete("/api/v1/lb", app.DeleteLB)
 
 	return r
 }

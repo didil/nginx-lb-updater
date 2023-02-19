@@ -23,6 +23,6 @@ run-dev:
 gen-mocks:
 	mock/gen_mocks.sh
 
-
-compose-up:
+.PHONY: docker-compose-up
+docker-compose-up:
 	docker-compose up --build --force-recreate

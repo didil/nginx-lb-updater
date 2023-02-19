@@ -34,6 +34,20 @@ func (m *MockLBUpdater) EXPECT() *MockLBUpdaterMockRecorder {
 	return m.recorder
 }
 
+// DeleteStream mocks base method.
+func (m *MockLBUpdater) DeleteStream(backendName string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteStream", backendName)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteStream indicates an expected call of DeleteStream.
+func (mr *MockLBUpdaterMockRecorder) DeleteStream(backendName interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStream", reflect.TypeOf((*MockLBUpdater)(nil).DeleteStream), backendName)
+}
+
 // UpdateStream mocks base method.
 func (m *MockLBUpdater) UpdateStream(backendName string, port int, protocol string, servers []services.Server, proxyTimeoutSeconds, proxyConnectTimeoutSeconds int) error {
 	m.ctrl.T.Helper()

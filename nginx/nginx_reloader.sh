@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 while true
 do
- inotifywait --exclude .swp -e create -e modify -e delete -e move -m /etc/nginx/streams.d
+ inotifywait --exclude .swp -e create -e modify -e delete -e move /etc/nginx/streams.d
  nginx -t
  if [ $? -eq 0 ]
  then
