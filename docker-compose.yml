@@ -6,14 +6,13 @@ services:
     volumes:
       - shared-volume:/etc/nginx/streams.d
     ports:
-      - "8080:80"       
+      - "8080:8080"       
 
   nginx-lb-updater:
-    image: quay.io/didil/nginx-lb-updater:6e0f56d
+    build: .
     ports:
       - "3000:3000"    
     volumes:
-      #- /host/path/nginx.conf:/etc/nginx/nginx.conf:ro
       - shared-volume:/etc/nginx/streams.d
 
 volumes:
