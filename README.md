@@ -13,11 +13,11 @@ Example:
     "upstreamServers":[
         {
             "host": "192.168.64.5", 
-            "port": 30291,
+            "port": 30291
         },
         {
             "host": "192.168.64.6", 
-            "port": 30291,
+            "port": 30291
         }
     ],
     "proxyTimeoutSeconds": 5,
@@ -43,7 +43,7 @@ stream {
     }
 }
 ````
-You can see in example-nginx.conf an example of a root nginx config that works with this setup
+You can see an example of a root nginx config that works with this setup under nginx/nginx.conf
 
 
 3/ We issue an nginx hot reload command through 
