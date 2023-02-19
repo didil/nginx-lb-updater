@@ -6,7 +6,7 @@ services:
     volumes:
       - shared-volume:/etc/nginx/streams.d
     ports:
-      - "8080:√"       
+      - "8080:8080"       
       - "8081:8081"       
       - "8082:8082"       
       - "8083:8083"       
