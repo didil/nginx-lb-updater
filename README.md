@@ -1,6 +1,6 @@
 # NGINX Load Balancer Updater API
 
-Allows updating a nginx L4 load balancer setup through a JSON API
+Allows updating an Nginx L4 load balancer setup through a JSON API
 
 ## How it works
 1 / The API receives the updates
