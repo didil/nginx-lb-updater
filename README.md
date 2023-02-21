@@ -54,7 +54,7 @@ sudo nginx -s reload
 ````bash
 docker-compose up
 ````
-This runs a container with the API exposed on the host on port 3000, as well as a container of the nginx instance where load balancers can be created on ports 8080-8084.
+This runs a container with the API exposed on the host on port 3000, as well as a container of the nginx instance where load balancers can be created on ports 8100-8104.
 The 2 containers share a volume, and the nginx container watches for changes on that volume and reloads the server whenever config files are modified by the nginx-lb-updater API.
 
 ## API
