@@ -6,11 +6,7 @@ services:
     volumes:
       - shared-volume:/etc/nginx/streams.d
     ports:
-      - "8100:8100"       
-      - "8101:8101"       
-      - "8102:8102"       
-      - "8103:8103"       
-      - "8104:8104"       
+      - "8100-8200:8100-8200"     
 
   nginx-lb-updater:
     build: .
